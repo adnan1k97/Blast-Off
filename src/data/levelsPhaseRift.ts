@@ -1,0 +1,551 @@
+import { Level } from '@/types/game';
+
+const P = 40;
+const S = 600;
+
+export const phaseRiftLevels: Level[] = [
+  // === EASY (501-508) — Intro to Phase Shifting & Dimension Tears ===
+  {
+    id: 501, name: "Phase Initiation", mazeSize: 'small', balls: 1, difficulty: 1, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 300 }, goal: { x: 520, y: 300, radius: 40 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 280, y: P, width: 10, height: S-2*P },
+    ],
+    hazards: [],
+    phaseShifts: [{ id: 1, x: 200, y: 250, width: 60, height: 100, phaseDuration: 2000, cooldown: 3000 }],
+    collectibles: [
+      { id: 1, x: 150, y: 200, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 400, y: 300, radius: 12, type: 'coin', points: 100 },
+    ],
+  },
+  {
+    id: 502, name: "Rift Sight", mazeSize: 'small', balls: 1, difficulty: 1, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 80 }, goal: { x: 520, y: 520, radius: 40 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 200, y: 200, width: 200, height: 10 },
+      { x: 200, y: 400, width: 200, height: 10 },
+    ],
+    hazards: [],
+    dimensionTears: [
+      { id: 1, x: 150, y: 300, radius: 25, linkedTearId: 2, color: 'hsla(280, 80%, 60%, 1)', flipAxis: 'y' },
+      { id: 2, x: 450, y: 300, radius: 25, linkedTearId: 1, color: 'hsla(320, 80%, 60%, 1)', flipAxis: 'y' },
+    ],
+    collectibles: [
+      { id: 1, x: 300, y: 150, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 300, y: 450, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  {
+    id: 503, name: "Fading Walls", mazeSize: 'small', balls: 1, difficulty: 2, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 520 }, goal: { x: 520, y: 80, radius: 35 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 180, y: P, width: 10, height: 400 },
+      { x: 380, y: 160, width: 10, height: 400 },
+    ],
+    hazards: [{ x: 300, y: 300, radius: 20, type: 'hole' }],
+    phaseShifts: [
+      { id: 1, x: 100, y: 350, width: 60, height: 80, phaseDuration: 1800, cooldown: 2500 },
+      { id: 2, x: 280, y: 100, width: 60, height: 80, phaseDuration: 1800, cooldown: 2500 },
+    ],
+    collectibles: [
+      { id: 1, x: 130, y: 200, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 480, y: 300, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 280, y: 450, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  {
+    id: 504, name: "Double Tear", mazeSize: 'small', balls: 1, difficulty: 2, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 300 }, goal: { x: 520, y: 300, radius: 35 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 200, y: 150, width: 10, height: 300 },
+      { x: 380, y: 150, width: 10, height: 300 },
+    ],
+    hazards: [
+      { x: 300, y: 200, radius: 18, type: 'hole' },
+      { x: 300, y: 400, radius: 18, type: 'hole' },
+    ],
+    dimensionTears: [
+      { id: 1, x: 100, y: 150, radius: 22, linkedTearId: 2, color: 'hsla(260, 80%, 55%, 1)', flipAxis: 'x' },
+      { id: 2, x: 300, y: 300, radius: 22, linkedTearId: 3, color: 'hsla(300, 80%, 55%, 1)', flipAxis: 'x' },
+      { id: 3, x: 500, y: 450, radius: 22, linkedTearId: 1, color: 'hsla(340, 80%, 55%, 1)', flipAxis: 'y' },
+    ],
+    collectibles: [
+      { id: 1, x: 150, y: 450, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 450, y: 150, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  {
+    id: 505, name: "Ghost Corridor", mazeSize: 'medium', balls: 1, difficulty: 3, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 80 }, goal: { x: 520, y: 520, radius: 35 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 150, y: P, width: 10, height: 350 },
+      { x: 280, y: 200, width: 10, height: 360 },
+      { x: 420, y: P, width: 10, height: 350 },
+    ],
+    hazards: [
+      { x: 210, y: 200, radius: 18, type: 'hole' },
+      { x: 350, y: 400, radius: 18, type: 'hole' },
+    ],
+    phaseShifts: [
+      { id: 1, x: 80, y: 300, width: 50, height: 60, phaseDuration: 1500, cooldown: 2000 },
+      { id: 2, x: 200, y: 120, width: 50, height: 60, phaseDuration: 1500, cooldown: 2000 },
+      { id: 3, x: 340, y: 300, width: 50, height: 60, phaseDuration: 1500, cooldown: 2000 },
+    ],
+    collectibles: [
+      { id: 1, x: 80, y: 450, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 210, y: 100, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 350, y: 200, radius: 12, type: 'coin', points: 100 },
+      { id: 4, x: 480, y: 300, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  {
+    id: 506, name: "Tear Chain", mazeSize: 'medium', balls: 1, difficulty: 3, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 520 }, goal: { x: 520, y: 80, radius: 35 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: P, y: 350, width: 400, height: 10 },
+      { x: 150, y: 200, width: 410, height: 10 },
+    ],
+    hazards: [
+      { x: 200, y: 450, radius: 20, type: 'hole' },
+      { x: 400, y: 120, radius: 20, type: 'hole' },
+    ],
+    dimensionTears: [
+      { id: 1, x: 100, y: 450, radius: 25, linkedTearId: 2, color: 'hsla(270, 85%, 60%, 1)', flipAxis: 'both' },
+      { id: 2, x: 300, y: 280, radius: 25, linkedTearId: 3, color: 'hsla(310, 85%, 60%, 1)', flipAxis: 'x' },
+      { id: 3, x: 500, y: 120, radius: 25, linkedTearId: 1, color: 'hsla(350, 85%, 60%, 1)', flipAxis: 'y' },
+    ],
+    collectibles: [
+      { id: 1, x: 300, y: 450, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 200, y: 280, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 400, y: 280, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  {
+    id: 507, name: "Phantom Maze", mazeSize: 'medium', balls: 1, difficulty: 4, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 80 }, goal: { x: 300, y: 300, radius: 30 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 150, y: 150, width: 300, height: 10 },
+      { x: 150, y: 150, width: 10, height: 300 },
+      { x: 150, y: 450, width: 300, height: 10 },
+      { x: 450, y: 150, width: 10, height: 300 },
+      { x: 250, y: 250, width: 100, height: 10 },
+      { x: 250, y: 350, width: 100, height: 10 },
+      { x: 250, y: 250, width: 10, height: 100 },
+      { x: 350, y: 250, width: 10, height: 100 },
+    ],
+    hazards: [
+      { x: 200, y: 300, radius: 15, type: 'hole' },
+      { x: 400, y: 300, radius: 15, type: 'hole' },
+      { x: 300, y: 200, radius: 15, type: 'hole' },
+      { x: 300, y: 400, radius: 15, type: 'hole' },
+    ],
+    phaseShifts: [
+      { id: 1, x: 80, y: 100, width: 50, height: 50, phaseDuration: 1200, cooldown: 1800 },
+      { id: 2, x: 170, y: 350, width: 50, height: 50, phaseDuration: 1200, cooldown: 1800 },
+    ],
+    collectibles: [
+      { id: 1, x: 300, y: 300, radius: 14, type: 'gem', points: 250 },
+      { id: 2, x: 200, y: 200, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 400, y: 400, radius: 12, type: 'coin', points: 100 },
+      { id: 4, x: 520, y: 520, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  {
+    id: 508, name: "Rift Nexus", mazeSize: 'medium', balls: 1, difficulty: 4, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 300 }, goal: { x: 520, y: 300, radius: 30 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 200, y: P, width: 10, height: 230 },
+      { x: 200, y: 330, width: 10, height: 230 },
+      { x: 400, y: P, width: 10, height: 230 },
+      { x: 400, y: 330, width: 10, height: 230 },
+    ],
+    hazards: [
+      { x: 300, y: 150, radius: 18, type: 'hole' },
+      { x: 300, y: 450, radius: 18, type: 'hole' },
+    ],
+    dimensionTears: [
+      { id: 1, x: 150, y: 150, radius: 20, linkedTearId: 2, color: 'hsla(270, 90%, 55%, 1)', flipAxis: 'both' },
+      { id: 2, x: 300, y: 300, radius: 20, linkedTearId: 3, color: 'hsla(300, 90%, 55%, 1)', flipAxis: 'x' },
+      { id: 3, x: 450, y: 150, radius: 20, linkedTearId: 4, color: 'hsla(330, 90%, 55%, 1)', flipAxis: 'y' },
+      { id: 4, x: 450, y: 450, radius: 20, linkedTearId: 1, color: 'hsla(240, 90%, 55%, 1)', flipAxis: 'both' },
+    ],
+    phaseShifts: [{ id: 1, x: 190, y: 260, width: 30, height: 80, phaseDuration: 1000, cooldown: 2000 }],
+    collectibles: [
+      { id: 1, x: 100, y: 450, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 300, y: 80, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 500, y: 300, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  // === MEDIUM (509-514) ===
+  {
+    id: 509, name: "Phase Rush", mazeSize: 'medium', balls: 1, difficulty: 5, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 80 }, goal: { x: 520, y: 520, radius: 30 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 150, y: 100, width: 10, height: 400 },
+      { x: 250, y: 100, width: 10, height: 400 },
+      { x: 350, y: 100, width: 10, height: 400 },
+      { x: 450, y: 100, width: 10, height: 400 },
+    ],
+    hazards: [
+      { x: 200, y: 300, radius: 16, type: 'hole' },
+      { x: 300, y: 200, radius: 16, type: 'hole' },
+      { x: 400, y: 400, radius: 16, type: 'hole' },
+    ],
+    phaseShifts: [
+      { id: 1, x: 80, y: 250, width: 50, height: 50, phaseDuration: 1000, cooldown: 1500 },
+      { id: 2, x: 200, y: 150, width: 40, height: 40, phaseDuration: 800, cooldown: 1500 },
+      { id: 3, x: 300, y: 350, width: 40, height: 40, phaseDuration: 800, cooldown: 1500 },
+      { id: 4, x: 400, y: 200, width: 40, height: 40, phaseDuration: 800, cooldown: 1500 },
+    ],
+    collectibles: [
+      { id: 1, x: 200, y: 100, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 300, y: 500, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 400, y: 100, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  {
+    id: 510, name: "Dimension Weave", mazeSize: 'medium', balls: 1, difficulty: 5, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 300, y: 520 }, goal: { x: 300, y: 80, radius: 30 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: P, y: 350, width: 250, height: 10 },
+      { x: 310, y: 350, width: 250, height: 10 },
+      { x: P, y: 200, width: 250, height: 10 },
+      { x: 310, y: 200, width: 250, height: 10 },
+    ],
+    hazards: [
+      { x: 150, y: 280, radius: 20, type: 'hole' },
+      { x: 450, y: 280, radius: 20, type: 'hole' },
+    ],
+    dimensionTears: [
+      { id: 1, x: 100, y: 450, radius: 22, linkedTearId: 2, color: 'hsla(280, 85%, 60%, 1)', flipAxis: 'y' },
+      { id: 2, x: 500, y: 280, radius: 22, linkedTearId: 3, color: 'hsla(310, 85%, 60%, 1)', flipAxis: 'x' },
+      { id: 3, x: 100, y: 120, radius: 22, linkedTearId: 1, color: 'hsla(250, 85%, 60%, 1)', flipAxis: 'both' },
+    ],
+    collectibles: [
+      { id: 1, x: 300, y: 280, radius: 14, type: 'gem', points: 250 },
+      { id: 2, x: 200, y: 450, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 400, y: 120, radius: 12, type: 'coin', points: 100 },
+    ],
+  },
+  {
+    id: 511, name: "Phase Maze", mazeSize: 'large', balls: 1, difficulty: 5, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 300 }, goal: { x: 520, y: 300, radius: 28 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 150, y: P, width: 10, height: 200 },
+      { x: 150, y: 300, width: 10, height: 260 },
+      { x: 300, y: 100, width: 10, height: 200 },
+      { x: 300, y: 400, width: 10, height: 160 },
+      { x: 450, y: P, width: 10, height: 300 },
+      { x: 450, y: 420, width: 10, height: 140 },
+    ],
+    hazards: [
+      { x: 220, y: 200, radius: 15, type: 'hole' },
+      { x: 370, y: 350, radius: 15, type: 'hole' },
+      { x: 220, y: 450, radius: 15, type: 'hole' },
+    ],
+    phaseShifts: [
+      { id: 1, x: 100, y: 220, width: 40, height: 60, phaseDuration: 1200, cooldown: 2000 },
+      { id: 2, x: 250, y: 320, width: 40, height: 60, phaseDuration: 1000, cooldown: 2000 },
+      { id: 3, x: 400, y: 340, width: 40, height: 60, phaseDuration: 1000, cooldown: 2000 },
+    ],
+    collectibles: [
+      { id: 1, x: 220, y: 100, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 370, y: 200, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 520, y: 480, radius: 14, type: 'gem', points: 250 },
+      { id: 4, x: 80, y: 480, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  {
+    id: 512, name: "Tear Storm", mazeSize: 'large', balls: 1, difficulty: 6, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 520 }, goal: { x: 520, y: 520, radius: 28 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 200, y: 200, width: 200, height: 10 },
+      { x: 200, y: 400, width: 200, height: 10 },
+      { x: 200, y: 200, width: 10, height: 200 },
+      { x: 400, y: 200, width: 10, height: 200 },
+    ],
+    hazards: [
+      { x: 300, y: 300, radius: 25, type: 'hole' },
+      { x: 100, y: 100, radius: 15, type: 'hole' },
+      { x: 500, y: 100, radius: 15, type: 'hole' },
+    ],
+    dimensionTears: [
+      { id: 1, x: 100, y: 300, radius: 20, linkedTearId: 2, color: 'hsla(270, 90%, 60%, 1)', flipAxis: 'x' },
+      { id: 2, x: 500, y: 300, radius: 20, linkedTearId: 3, color: 'hsla(290, 90%, 60%, 1)', flipAxis: 'y' },
+      { id: 3, x: 300, y: 100, radius: 20, linkedTearId: 4, color: 'hsla(310, 90%, 60%, 1)', flipAxis: 'both' },
+      { id: 4, x: 300, y: 500, radius: 20, linkedTearId: 1, color: 'hsla(330, 90%, 60%, 1)', flipAxis: 'x' },
+    ],
+    collectibles: [
+      { id: 1, x: 100, y: 500, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 500, y: 500, radius: 14, type: 'gem', points: 250 },
+      { id: 3, x: 300, y: 80, radius: 12, type: 'coin', points: 100 },
+    ],
+  },
+  // === HARD (513-518) ===
+  {
+    id: 513, name: "Phase Labyrinth", mazeSize: 'large', balls: 1, difficulty: 6, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 520 }, goal: { x: 520, y: 80, radius: 28 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 120, y: 120, width: 360, height: 10 },
+      { x: 120, y: 250, width: 360, height: 10 },
+      { x: 120, y: 380, width: 360, height: 10 },
+      { x: 250, y: 120, width: 10, height: 130 },
+      { x: 380, y: 250, width: 10, height: 130 },
+    ],
+    hazards: [
+      { x: 200, y: 190, radius: 15, type: 'hole' },
+      { x: 350, y: 320, radius: 15, type: 'hole' },
+      { x: 450, y: 450, radius: 15, type: 'hole' },
+    ],
+    phaseShifts: [
+      { id: 1, x: 80, y: 400, width: 40, height: 50, phaseDuration: 900, cooldown: 1500 },
+      { id: 2, x: 200, y: 270, width: 40, height: 50, phaseDuration: 900, cooldown: 1500 },
+      { id: 3, x: 350, y: 140, width: 40, height: 50, phaseDuration: 900, cooldown: 1500 },
+    ],
+    collectibles: [
+      { id: 1, x: 450, y: 80, radius: 14, type: 'gem', points: 250 },
+      { id: 2, x: 150, y: 450, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 300, y: 190, radius: 12, type: 'coin', points: 100 },
+      { id: 4, x: 300, y: 450, radius: 12, type: 'coin', points: 100 },
+    ],
+  },
+  {
+    id: 514, name: "Rifted Reality", mazeSize: 'large', balls: 1, difficulty: 7, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 80 }, goal: { x: 520, y: 520, radius: 25 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 150, y: 150, width: 10, height: 300 },
+      { x: 300, y: 100, width: 10, height: 200 },
+      { x: 300, y: 350, width: 10, height: 200 },
+      { x: 450, y: 150, width: 10, height: 300 },
+    ],
+    hazards: [
+      { x: 220, y: 300, radius: 18, type: 'hole' },
+      { x: 380, y: 300, radius: 18, type: 'hole' },
+      { x: 300, y: 300, radius: 15, type: 'hole' },
+    ],
+    dimensionTears: [
+      { id: 1, x: 80, y: 300, radius: 22, linkedTearId: 2, color: 'hsla(265, 90%, 55%, 1)', flipAxis: 'both' },
+      { id: 2, x: 220, y: 100, radius: 22, linkedTearId: 3, color: 'hsla(285, 90%, 55%, 1)', flipAxis: 'x' },
+      { id: 3, x: 380, y: 500, radius: 22, linkedTearId: 4, color: 'hsla(305, 90%, 55%, 1)', flipAxis: 'y' },
+      { id: 4, x: 520, y: 200, radius: 22, linkedTearId: 1, color: 'hsla(325, 90%, 55%, 1)', flipAxis: 'both' },
+    ],
+    phaseShifts: [{ id: 1, x: 270, y: 270, width: 60, height: 60, phaseDuration: 800, cooldown: 2000 }],
+    collectibles: [
+      { id: 1, x: 220, y: 200, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 380, y: 400, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 300, y: 80, radius: 14, type: 'gem', points: 250 },
+      { id: 4, x: 300, y: 520, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  // === EXPERT (515-518) ===
+  {
+    id: 515, name: "Phase Gauntlet", mazeSize: 'large', balls: 1, difficulty: 7, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 300, y: 520 }, goal: { x: 300, y: 80, radius: 25 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: P, y: 420, width: 230, height: 10 }, { x: 330, y: 420, width: 230, height: 10 },
+      { x: P, y: 300, width: 230, height: 10 }, { x: 330, y: 300, width: 230, height: 10 },
+      { x: P, y: 180, width: 230, height: 10 }, { x: 330, y: 180, width: 230, height: 10 },
+    ],
+    hazards: [
+      { x: 150, y: 360, radius: 15, type: 'hole' },
+      { x: 450, y: 360, radius: 15, type: 'hole' },
+      { x: 200, y: 240, radius: 15, type: 'hole' },
+      { x: 400, y: 240, radius: 15, type: 'hole' },
+      { x: 300, y: 130, radius: 18, type: 'hole' },
+    ],
+    phaseShifts: [
+      { id: 1, x: 280, y: 440, width: 40, height: 40, phaseDuration: 800, cooldown: 1200 },
+      { id: 2, x: 280, y: 320, width: 40, height: 40, phaseDuration: 800, cooldown: 1200 },
+      { id: 3, x: 280, y: 200, width: 40, height: 40, phaseDuration: 800, cooldown: 1200 },
+    ],
+    collectibles: [
+      { id: 1, x: 100, y: 460, radius: 12, type: 'coin', points: 100 },
+      { id: 2, x: 500, y: 260, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 300, y: 80, radius: 16, type: 'gem', points: 500 },
+    ],
+  },
+  {
+    id: 516, name: "Rift Convergence", mazeSize: 'large', balls: 1, difficulty: 8, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 80 }, goal: { x: 520, y: 520, radius: 25 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 200, y: 200, width: 200, height: 10 },
+      { x: 200, y: 400, width: 200, height: 10 },
+      { x: 200, y: 200, width: 10, height: 200 },
+      { x: 400, y: 200, width: 10, height: 200 },
+    ],
+    hazards: [
+      { x: 300, y: 300, radius: 20, type: 'hole' },
+      { x: 150, y: 300, radius: 15, type: 'hole' },
+      { x: 450, y: 300, radius: 15, type: 'hole' },
+      { x: 300, y: 150, radius: 15, type: 'hole' },
+      { x: 300, y: 450, radius: 15, type: 'hole' },
+    ],
+    dimensionTears: [
+      { id: 1, x: 80, y: 520, radius: 20, linkedTearId: 2, color: 'hsla(260, 95%, 55%, 1)', flipAxis: 'both' },
+      { id: 2, x: 520, y: 80, radius: 20, linkedTearId: 3, color: 'hsla(280, 95%, 55%, 1)', flipAxis: 'x' },
+      { id: 3, x: 520, y: 520, radius: 20, linkedTearId: 4, color: 'hsla(300, 95%, 55%, 1)', flipAxis: 'y' },
+      { id: 4, x: 80, y: 300, radius: 20, linkedTearId: 1, color: 'hsla(320, 95%, 55%, 1)', flipAxis: 'both' },
+    ],
+    collectibles: [
+      { id: 1, x: 300, y: 300, radius: 16, type: 'gem', points: 500 },
+      { id: 2, x: 80, y: 200, radius: 12, type: 'coin', points: 100 },
+      { id: 3, x: 520, y: 400, radius: 12, type: 'coin', points: 100 },
+    ],
+    powerUps: [{ id: 1, x: 300, y: 100, radius: 15, type: 'shield', duration: 5000 }],
+  },
+  {
+    id: 517, name: "Phantom Strike", mazeSize: 'large', balls: 2, difficulty: 8, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 300 }, goal: { x: 520, y: 300, radius: 25 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 200, y: P, width: 10, height: 200 },
+      { x: 200, y: 350, width: 10, height: 210 },
+      { x: 350, y: P, width: 10, height: 200 },
+      { x: 350, y: 350, width: 10, height: 210 },
+    ],
+    hazards: [
+      { x: 270, y: 250, radius: 18, type: 'hole' },
+      { x: 270, y: 400, radius: 18, type: 'hole' },
+    ],
+    phaseShifts: [
+      { id: 1, x: 150, y: 220, width: 40, height: 100, phaseDuration: 900, cooldown: 1800 },
+      { id: 2, x: 310, y: 220, width: 30, height: 100, phaseDuration: 700, cooldown: 1800 },
+    ],
+    collectibles: [
+      { id: 1, x: 270, y: 80, radius: 14, type: 'gem', points: 250 },
+      { id: 2, x: 270, y: 520, radius: 14, type: 'gem', points: 250 },
+      { id: 3, x: 480, y: 150, radius: 12, type: 'coin', points: 100 },
+      { id: 4, x: 480, y: 450, radius: 12, type: 'coin', points: 100 },
+    ],
+  },
+  {
+    id: 518, name: "Dimensional Breach", mazeSize: 'large', balls: 1, difficulty: 8, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 520, y: 520 }, goal: { x: 80, y: 80, radius: 25 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 150, y: 150, width: 300, height: 10 },
+      { x: 150, y: 450, width: 300, height: 10 },
+      { x: 150, y: 150, width: 10, height: 150 },
+      { x: 450, y: 300, width: 10, height: 150 },
+    ],
+    hazards: [
+      { x: 300, y: 300, radius: 20, type: 'hole' },
+      { x: 200, y: 100, radius: 15, type: 'hole' },
+      { x: 400, y: 500, radius: 15, type: 'hole' },
+    ],
+    dimensionTears: [
+      { id: 1, x: 300, y: 80, radius: 22, linkedTearId: 2, color: 'hsla(270, 90%, 60%, 1)', flipAxis: 'both' },
+      { id: 2, x: 520, y: 300, radius: 22, linkedTearId: 3, color: 'hsla(290, 90%, 60%, 1)', flipAxis: 'x' },
+      { id: 3, x: 300, y: 520, radius: 22, linkedTearId: 4, color: 'hsla(310, 90%, 60%, 1)', flipAxis: 'y' },
+      { id: 4, x: 80, y: 300, radius: 22, linkedTearId: 1, color: 'hsla(330, 90%, 60%, 1)', flipAxis: 'both' },
+    ],
+    phaseShifts: [{ id: 1, x: 250, y: 250, width: 40, height: 40, phaseDuration: 600, cooldown: 2500 }],
+    collectibles: [
+      { id: 1, x: 80, y: 520, radius: 16, type: 'gem', points: 500 },
+      { id: 2, x: 520, y: 80, radius: 16, type: 'gem', points: 500 },
+      { id: 3, x: 400, y: 200, radius: 12, type: 'coin', points: 100 },
+    ],
+  },
+  // === BOSS (519-520) ===
+  {
+    id: 519, name: "Phase Master", mazeSize: 'large', balls: 2, difficulty: 9, category: 'phaseshift', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 520 }, goal: { x: 520, y: 80, radius: 22 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 120, y: 120, width: 10, height: 360 },
+      { x: 240, y: 120, width: 10, height: 360 },
+      { x: 360, y: 120, width: 10, height: 360 },
+      { x: 480, y: 120, width: 10, height: 360 },
+      { x: 120, y: 300, width: 120, height: 10 },
+      { x: 360, y: 300, width: 120, height: 10 },
+    ],
+    hazards: [
+      { x: 180, y: 200, radius: 15, type: 'hole' },
+      { x: 300, y: 400, radius: 15, type: 'hole' },
+      { x: 420, y: 200, radius: 15, type: 'hole' },
+      { x: 180, y: 400, radius: 12, type: 'hole' },
+      { x: 420, y: 400, radius: 12, type: 'hole' },
+    ],
+    phaseShifts: [
+      { id: 1, x: 80, y: 440, width: 30, height: 40, phaseDuration: 700, cooldown: 1200 },
+      { id: 2, x: 180, y: 130, width: 30, height: 40, phaseDuration: 700, cooldown: 1200 },
+      { id: 3, x: 300, y: 320, width: 30, height: 40, phaseDuration: 700, cooldown: 1200 },
+      { id: 4, x: 430, y: 130, width: 30, height: 40, phaseDuration: 700, cooldown: 1200 },
+    ],
+    collectibles: [
+      { id: 1, x: 180, y: 80, radius: 14, type: 'gem', points: 250 },
+      { id: 2, x: 300, y: 200, radius: 14, type: 'gem', points: 250 },
+      { id: 3, x: 420, y: 480, radius: 14, type: 'gem', points: 250 },
+    ],
+  },
+  {
+    id: 520, name: "The Rift Gate", mazeSize: 'large', balls: 1, difficulty: 10, category: 'dimensiontear', world: 'dimension-nexus',
+    startPosition: { x: 80, y: 520 }, goal: { x: 520, y: 520, radius: 22 },
+    walls: [
+      { x: P, y: P, width: S-2*P, height: 10 }, { x: P, y: S-P-10, width: S-2*P, height: 10 },
+      { x: P, y: P, width: 10, height: S-2*P }, { x: S-P-10, y: P, width: 10, height: S-2*P },
+      { x: 200, y: 100, width: 10, height: 200 },
+      { x: 400, y: 300, width: 10, height: 200 },
+      { x: 100, y: 300, width: 200, height: 10 },
+      { x: 400, y: 300, width: 160, height: 10 },
+      { x: 200, y: 100, width: 200, height: 10 },
+      { x: 200, y: 500, width: 200, height: 10 },
+    ],
+    hazards: [
+      { x: 300, y: 200, radius: 20, type: 'hole' },
+      { x: 150, y: 400, radius: 18, type: 'hole' },
+      { x: 450, y: 200, radius: 18, type: 'hole' },
+      { x: 300, y: 400, radius: 15, type: 'hole' },
+    ],
+    dimensionTears: [
+      { id: 1, x: 100, y: 100, radius: 25, linkedTearId: 2, color: 'hsla(260, 100%, 55%, 1)', flipAxis: 'both' },
+      { id: 2, x: 500, y: 100, radius: 25, linkedTearId: 3, color: 'hsla(280, 100%, 55%, 1)', flipAxis: 'x' },
+      { id: 3, x: 100, y: 500, radius: 25, linkedTearId: 4, color: 'hsla(300, 100%, 55%, 1)', flipAxis: 'y' },
+      { id: 4, x: 300, y: 300, radius: 25, linkedTearId: 1, color: 'hsla(320, 100%, 55%, 1)', flipAxis: 'both' },
+    ],
+    phaseShifts: [
+      { id: 1, x: 260, y: 260, width: 40, height: 40, phaseDuration: 600, cooldown: 3000 },
+    ],
+    collectibles: [
+      { id: 1, x: 300, y: 80, radius: 16, type: 'gem', points: 500 },
+      { id: 2, x: 80, y: 400, radius: 14, type: 'gem', points: 250 },
+      { id: 3, x: 520, y: 200, radius: 14, type: 'gem', points: 250 },
+    ],
+    powerUps: [{ id: 1, x: 300, y: 520, radius: 15, type: 'shield', duration: 4000 }],
+  },
+];
