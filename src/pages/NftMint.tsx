@@ -8,7 +8,7 @@ import { BrowserProvider, Contract } from 'ethers';
 
 const MINT_FEE_USD = 0.01;
 const MINT_FEE_ETH = '0.000003'; // ~$0.01 USD at current market rates
-const TREASURY_ADDRESS = '0xeF64560D0481F480D9Fcc0E500eF530DE4bCD01A';
+const TREASURY_ADDRESS = '0x64C8fb3334E4C2482470A1f4F2f2177117408B4a';
 const PINATA_IPFS_CID = 'ipfs://QmYwAPjzv5CZ1A269stQTUc1gN4294spA3u1X9uBN9v3Gf';
 
 // Deployed Smart Contract details on Base Mainnet
