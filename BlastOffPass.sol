@@ -20,7 +20,7 @@ contract BlastOffPass is ERC721URIStorage, Ownable {
 
     event PassMinted(address indexed minter, uint256 indexed tokenId);
 
-    constructor(address initialOwner) ERC721("Blast Off Access Pass", "BOPASS") Ownable(initialOwner) {
+    constructor() ERC721("Blast Off Access Pass", "BOPASS") Ownable(msg.sender) {
         _nextTokenId = 1;
     }
 
