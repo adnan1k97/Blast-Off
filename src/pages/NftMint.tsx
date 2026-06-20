@@ -4,11 +4,19 @@ import { useWallet } from '@/components/wallet/WalletProvider';
 import { Button } from '@/components/ui/button';
 import { ShieldCheck, ArrowLeft, Loader2, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import { BrowserProvider, Contract } from 'ethers';
 
 const MINT_FEE_USD = 0.01;
 const MINT_FEE_ETH = '0.000003'; // ~$0.01 USD at current market rates
 const TREASURY_ADDRESS = '0xeF64560D0481F480D9Fcc0E500eF530DE4bCD01A';
 const PINATA_IPFS_CID = 'ipfs://QmYwAPjzv5CZ1A269stQTUc1gN4294spA3u1X9uBN9v3Gf';
+
+// Deployed Smart Contract details on Base Mainnet
+const NFT_CONTRACT_ADDRESS = '0x3dF8b3cd3a538f589a554Ee2DDe98052C93ad7ad';
+const NFT_ABI = [
+  "function mintPass() public payable returns (uint256)",
+  "event PassMinted(address indexed minter, uint256 indexed tokenId)"
+];
 
 const NftMint: React.FC = () => {
   const navigate = useNavigate();
@@ -57,58 +65,69 @@ const NftMint: React.FC = () => {
 
     setMintingState('preparing');
 
-    // Mimic smart contract interaction and transaction signing
-    setTimeout(async () => {
-      setMintingState('signing');
-      
-      try {
-        const ethereum = (window as any).ethereum;
-        if (ethereum && account?.address) {
-          // Attempt a real micro-transaction signature for $0.01 to treasury
-          // hex value for 0.000003 ETH is 0x2BC07E282400 (3000000000000 wei)
-          const valueHex = '0x2bc07e282400';
-          const params = [{
-            from: account.address,
-            to: TREASURY_ADDRESS,
-            value: valueHex,
-            gasLimit: '0x15F90', // 90000 gas
-          }];
+    try {
+      const ethereum = (window as any).ethereum;
+      if (ethereum && account?.address) {
+        setMintingState('signing');
+        
+        // Initialize ethers Provider and Signer
+        const provider = new BrowserProvider(ethereum);
+        const signer = await provider.getSigner();
+        const contract = new Contract(NFT_CONTRACT_ADDRESS, NFT_ABI, signer);
 
-          toast.info('Please confirm the 0.01$ transaction in your Coinbase Wallet');
-          const tx = await ethereum.request({
-            method: 'eth_sendTransaction',
-            params,
-          });
+        toast.info('Please confirm the mint transaction in your wallet');
+        
+        // Execute mintPass payable call with 0.000003 ETH
+        const tx = await contract.mintPass({
+          value: 3000000000000n // 0.000003 ETH in Wei
+        });
 
-          if (tx) {
-            setTxHash(tx);
-          } else {
-            throw new Error('Transaction cancelled by user');
+        setTxHash(tx.hash);
+        setMintingState('confirming');
+
+        // Wait for 1 confirmation
+        const receipt = await tx.wait(1);
+        let newTokenId = Math.floor(Math.random() * 8999) + 1000;
+        
+        // Parse tokenId from contract event
+        if (receipt && receipt.logs) {
+          try {
+            if (receipt.logs[0] && (receipt.logs[0] as any).topics[2]) {
+              newTokenId = parseInt((receipt.logs[0] as any).topics[2], 16);
+            }
+          } catch (e) {
+            console.warn("Failed to parse tokenId from event topics, falling back to random", e);
           }
-        } else {
-          // Fallback simulation if running in custom browser preview without injection
-          const mockHash = '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
-          setTxHash(mockHash);
         }
 
-        setMintingState('confirming');
-        
-        // Wait for confirmation
-        setTimeout(() => {
-          const newTokenId = Math.floor(Math.random() * 8999) + 1000;
-          setTokenId(newTokenId);
-          localStorage.setItem('has_nft_pass', 'true');
-          localStorage.setItem('nft_pass_token_id', String(newTokenId));
-          setMintingState('success');
-          toast.success('NFT Pass Minted Successfully!');
-        }, 3000);
+        setTokenId(newTokenId);
+        localStorage.setItem('has_nft_pass', 'true');
+        localStorage.setItem('nft_pass_token_id', String(newTokenId));
+        setMintingState('success');
+        toast.success('NFT Pass Minted Successfully!');
 
-      } catch (err: any) {
-        console.error('Minting transaction failed:', err);
-        toast.error(err.message || 'Transaction rejected. Minting cancelled.');
-        setMintingState('idle');
+      } else {
+        // Fallback simulation for non-web3 environments
+        setMintingState('signing');
+        setTimeout(() => {
+          const mockHash = '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+          setTxHash(mockHash);
+          setMintingState('confirming');
+          setTimeout(() => {
+            const newTokenId = Math.floor(Math.random() * 8999) + 1000;
+            setTokenId(newTokenId);
+            localStorage.setItem('has_nft_pass', 'true');
+            localStorage.setItem('nft_pass_token_id', String(newTokenId));
+            setMintingState('success');
+            toast.success('NFT Pass Minted Successfully (Demo)!');
+          }, 2000);
+        }, 1500);
       }
-    }, 1500);
+    } catch (err: any) {
+      console.error('Minting transaction failed:', err);
+      toast.error(err.message || 'Transaction rejected. Minting cancelled.');
+      setMintingState('idle');
+    }
   };
 
   return (
